@@ -1,18 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Your existing styles or remove them */
+/* Reset or minimal global styles */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Allow MUI's Typography to handle font settings */
+/* You can add application-wide font settings here if not covered by MUI themes */
+/* For example:
+body {
+  font-family: 'Roboto', sans-serif;
+}
+*/
+
+/* Ensure html and body take up full height for layouts if needed */
+html, body, #root {
+  height: 100%;
 }
