@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
 import { DeploymentInfo, DeploymentStatus } from '../types/deployment';
-import { useNetworkStore } from './networkStore'; // To get block explorer URL
+import { useNetworkStore } from './networkStore';
+import { logActivity } from './activityStore'; // Import the helper
 
 interface DeploymentState {
   currentDeployments: DeploymentInfo[];
@@ -34,68 +35,69 @@ export const useDeploymentStore = create<DeploymentState>((set, get) => ({
     await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
     const randomGas = (Math.random() * 0.05 + 0.001).toFixed(4);
     const network = useNetworkStore.getState().getNetworkById(networkId);
-    set({ estimatedGas: `${randomGas} ${network?.currencySymbol || 'ETH'}`, isEstimatingGas: false });
+    const estimatedGasString = `${randomGas} ${network?.currencySymbol || 'ETH'}`;
+    set({ estimatedGas: estimatedGasString, isEstimatingGas: false });
+    logActivity('GAS_ESTIMATED', `Gas estimated for contract on ${network?.name || networkId}: ${estimatedGasString}`, { networkId, contractLength: contractCode.length }, 'Speed');
   },
 
   deployContract: async (contractName, contractCode, networkId) => {
     if (!contractCode || !networkId) {
       console.error("Contract code and network ID are required to deploy.");
+      logActivity('ERROR', `Deployment failed: Contract code or network ID missing.`, {contractName, networkId}, 'ErrorOutline');
       return;
     }
+    const network = useNetworkStore.getState().getNetworkById(networkId);
     const newDeploymentId = uuidv4();
-    const newDeployment: DeploymentInfo = {
+    const deploymentTimestamp = new Date();
+    const initialDeployment: DeploymentInfo = {
       id: newDeploymentId,
       contractName,
       status: 'pending',
       networkId,
-      timestamp: new Date(),
+      timestamp: deploymentTimestamp,
     };
 
     set(state => ({
-      currentDeployments: [newDeployment, ...state.currentDeployments.slice(0, 4)], // Keep last 5
+      currentDeployments: [initialDeployment, ...state.currentDeployments.slice(0, 4)],
       isDeploying: true,
-      estimatedGas: null // Clear gas estimate after starting deployment
+      estimatedGas: null
     }));
+    logActivity('DEPLOYMENT_STARTED', `Deployment of "${contractName}" initiated on ${network?.name || networkId}.`, { deploymentId: newDeploymentId, contractName, networkId }, 'RocketLaunch');
 
     // Simulate pending phase
     await new Promise(resolve => setTimeout(resolve, 1000));
+    const mockTxHash = `0x${uuidv4().replace(/-/g, '')}`;
     set(state => ({
       currentDeployments: state.currentDeployments.map(d =>
-        d.id === newDeploymentId ? { ...d, status: 'broadcasting', transactionHash: `0x${uuidv4().replace(/-/g, '')}` } : d
+        d.id === newDeploymentId ? { ...d, status: 'broadcasting', transactionHash: mockTxHash } : d
       ),
     }));
+    logActivity('DEPLOYMENT_STATUS_CHANGED', `Deployment of "${contractName}" broadcasting (Tx: ${mockTxHash.substring(0,12)}...).`, { deploymentId: newDeploymentId, txHash: mockTxHash, status: 'broadcasting' }, 'SettingsEthernet', newDeploymentId);
 
     // Simulate broadcasting/confirmation phase
     await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 3000));
 
-    const success = Math.random() > 0.2; // 80% success rate for simulation
+    const success = Math.random() > 0.2;
 
     if (success) {
+      const mockContractAddress = `0x${uuidv4().substring(0,40)}`;
       set(state => ({
         currentDeployments: state.currentDeployments.map(d =>
-          d.id === newDeploymentId ? {
-            ...d,
-            status: 'confirmed',
-            contractAddress: `0x${uuidv4().substring(0,40)}`
-          } : d
-        ),
-        isDeploying: false, // Assuming only one deployment at a time for this flag
-      }));
-    } else {
-      set(state => ({
-        currentDeployments: state.currentDeployments.map(d =>
-          d.id === newDeploymentId ? {
-            ...d,
-            status: 'failed',
-            error: 'Simulated transaction reverted by EVM. Check gas or contract logic.'
-          } : d
+          d.id === newDeploymentId ? { ...d, status: 'confirmed', contractAddress: mockContractAddress } : d
         ),
         isDeploying: false,
       }));
+      logActivity('DEPLOYMENT_SUCCEEDED', `Contract "${contractName}" deployed successfully to ${mockContractAddress.substring(0,10)}... on ${network?.name || networkId}.`, { deploymentId: newDeploymentId, contractAddress: mockContractAddress, networkId, txHash: mockTxHash }, 'CheckCircleOutline', newDeploymentId);
+    } else {
+      const errorMsg = 'Simulated transaction reverted by EVM. Check gas or contract logic.';
+      set(state => ({
+        currentDeployments: state.currentDeployments.map(d =>
+          d.id === newDeploymentId ? { ...d, status: 'failed', error: errorMsg } : d
+        ),
+        isDeploying: false,
+      }));
+      logActivity('DEPLOYMENT_FAILED', `Deployment of "${contractName}" failed on ${network?.name || networkId}. Reason: ${errorMsg}`, { deploymentId: newDeploymentId, error: errorMsg, networkId, txHash: mockTxHash }, 'ErrorOutline', newDeploymentId);
     }
-    // Note: Actual deployment requires Web3 provider integration (ethers.js, viem)
-    // and user's wallet interaction for signing transactions.
-    // It would also involve compiling Solidity to bytecode and ABI.
   },
 
   clearRecentDeployment: (id: string) => {

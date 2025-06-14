@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react'; // Added useState
 import { useMarketplaceStore } from '../../store/marketplaceStore';
 import { MarketplaceTemplate } from '../../types/marketplace';
 import { Box, Typography, Button, Paper, Chip, Grid, IconButton, Tooltip, useTheme, Alert } from '@mui/material';
-import CodeEditor from '../editor/CodeEditor'; // Re-use existing code editor
+import CodeEditor from '../editor/CodeEditor';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import GetAppIcon from '@mui/icons-material/GetApp'; // For "Use Template"
+import GetAppIcon from '@mui/icons-material/GetApp';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm'; // For GitHub Flavored Markdown (tables, etc.)
+import remarkGfm from 'remark-gfm';
+import UseTemplateDialog from './UseTemplateDialog'; // Import the dialog
 
 interface TemplateDetailViewProps {
-  // onUseTemplate: (template: MarketplaceTemplate) => void; // Action to use/deploy/copy code
-  // onClose: () => void; // To go back to the list view
+  // Props if any, currently uses store directly
 }
 
-const TemplateDetailView: React.FC<TemplateDetailViewProps> = (/*{ onUseTemplate, onClose }*/) => {
+const TemplateDetailView: React.FC<TemplateDetailViewProps> = () => {
   const { selectedTemplate, selectTemplate } = useMarketplaceStore();
   const theme = useTheme();
+  const [isUseTemplateDialogOpen, setIsUseTemplateDialogOpen] = useState(false);
 
   if (!selectedTemplate) {
     return (
@@ -25,39 +26,36 @@ const TemplateDetailView: React.FC<TemplateDetailViewProps> = (/*{ onUseTemplate
     );
   }
 
-  const handleUseTemplate = () => {
-      // TODO: Define what "Use Template" means.
-      // Option 1: Copy code to clipboard
-      navigator.clipboard.writeText(selectedTemplate.fullContractCode)
-        .then(() => console.log("Template code copied to clipboard!"))
-        .catch(err => console.error("Failed to copy template code:", err));
-      // Option 2: Navigate to a page with this code pre-filled (e.g., TokenCreator or ProjectDetail)
-      // Option 3: Directly initiate a deployment process (more complex)
-      alert(`"Use Template" clicked for ${selectedTemplate.name}.\nCode copied to clipboard (mock).`);
+  const handleOpenUseTemplateDialog = () => {
+    setIsUseTemplateDialogOpen(true);
+  };
+
+  const handleCloseUseTemplateDialog = () => {
+    setIsUseTemplateDialogOpen(false);
   };
 
   return (
-    <Paper elevation={0} sx={{ p: {xs: 1, sm:2, md: 3}, overflowY: 'auto', height: '100%' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-        <Tooltip title="Back to Marketplace List">
-          <IconButton onClick={() => selectTemplate(null)} sx={{ mr: 1 }}>
-            <ArrowBackIcon />
-          </IconButton>
-        </Tooltip>
-        <Typography variant="h4" component="h1" sx={{flexGrow: 1}}>
-          {selectedTemplate.name}
-        </Typography>
-        <Button
-            variant="contained"
-            startIcon={<GetAppIcon />}
-            onClick={handleUseTemplate}
-            // disabled={true} // Enable when action is defined
-        >
-          Use This Template
-        </Button>
-      </Box>
+    <>
+      <Paper elevation={0} sx={{ p: {xs: 1, sm:2, md: 3}, overflowY: 'auto', height: '100%' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <Tooltip title="Back to Marketplace List">
+            <IconButton onClick={() => selectTemplate(null)} sx={{ mr: 1 }}>
+              <ArrowBackIcon />
+            </IconButton>
+          </Tooltip>
+          <Typography variant="h4" component="h1" sx={{flexGrow: 1}}>
+            {selectedTemplate.name}
+          </Typography>
+          <Button
+              variant="contained"
+              startIcon={<GetAppIcon />}
+              onClick={handleOpenUseTemplateDialog}
+          >
+            Use This Template
+          </Button>
+        </Box>
 
-      <Grid container spacing={3}>
+        <Grid container spacing={3}>
         <Grid item xs={12} md={7}> {/* Left side: Code & Readme */}
           <Box sx={{ mb: 2 }}>
             <Typography variant="h6" gutterBottom>Contract Code</Typography>
@@ -132,6 +130,12 @@ const TemplateDetailView: React.FC<TemplateDetailViewProps> = (/*{ onUseTemplate
         </Grid>
       </Grid>
     </Paper>
+    <UseTemplateDialog
+        open={isUseTemplateDialogOpen}
+        onClose={handleCloseUseTemplateDialog}
+        template={selectedTemplate}
+    />
+    </>
   );
 };
 
