@@ -1,4 +1,3 @@
-/*
 import { Controller, Post, Body, HttpCode, HttpStatus, HttpException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RequestOtpDto, VerifyOtpDto } from './dto/auth.dto';
@@ -34,4 +33,3 @@ export class AuthController {
     }
   }
 }
-*/

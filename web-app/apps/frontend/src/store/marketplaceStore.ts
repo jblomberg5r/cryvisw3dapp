@@ -223,7 +223,7 @@ contract MyUpgradeableProxy is ERC1967Proxy {
 // import "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
 // import "@openzeppelin/contracts/access/OwnableUpgradeable.sol";
 // contract MyLogicV1 is Initializable, UUPSUpgradeable, OwnableUpgradeable { ... }`,
-    readme: `# Upgradeable Contract (UUPS Proxy)\n\nThis template demonstrates the UUPS proxy pattern using OpenZeppelin contracts, allowing you to upgrade your smart contract logic while preserving state and address.\n\n1. Deploy your logic contract (e.g., `MyLogicV1`).\n2. Deploy this `MyUpgradeableProxy` contract, providing the address of the logic contract and any initialization data.\n\nUsers interact with the proxy address. Upgrades are managed by the logic contract itself (via `UUPSUpgradeable`).`,
+    readme: `Simplified Readme Content. MyLogicV1.`, // Temporarily simplified
     iconUrl: 'https://example.com/icons/proxy.png',
     usageCount: 70,
     rating: 4.3,
