@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import './App.css'; // Assuming App.css exists (can be empty)
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
+import EmailOtpLogin from './components/EmailOtpLogin';
+import DashboardPage from './pages/DashboardPage';
+import GoogleAuthCallbackPage from './pages/GoogleAuthCallbackPage'; // Added
+import './App.css';
 
 const HomePage = () => {
   const [message, setMessage] = useState('');
@@ -55,19 +58,43 @@ function App() {
             <ul className="menu menu-horizontal p-0">
               <li><Link to="/">Home</Link></li>
               <li><Link to="/about">About</Link></li>
+              {isAuthenticated() ? (
+                <>
+                  <li><Link to="/dashboard">Dashboard</Link></li>
+                  <li><button onClick={() => { localStorage.removeItem('authToken'); window.location.pathname = '/login'; }}>Logout</button></li>
+                </>
+              ) : (
+                <li><Link to="/login">Login</Link></li>
+              )}
             </ul>
           </div>
         </nav>
 
         <div className="container mx-auto">
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<EmailOtpLogin />} />
+            <Route path="/auth/google/callback" element={<GoogleAuthCallbackPage />} /> {/* Added route */}
+            <Route
+              path="/dashboard"
+              element={isAuthenticated() ? <DashboardPage /> : <Navigate to="/login" replace />}
+            />
             <Route path="/about" element={<AboutPage />} />
+            <Route
+              path="/"
+              element={isAuthenticated() ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />}
+            />
+            {/* Default redirect for any other path if needed, or a 404 component */}
+            {/* <Route path="*" element={<Navigate to={isAuthenticated() ? "/dashboard" : "/login"} replace />} /> */}
           </Routes>
         </div>
       </div>
     </Router>
   );
 }
+
+// Helper function (can be outside or inside App component if preferred)
+const isAuthenticated = (): boolean => {
+  return localStorage.getItem('authToken') !== null;
+};
 
 export default App;
