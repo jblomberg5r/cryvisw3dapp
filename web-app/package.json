@@ -9,6 +9,10 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "@types/express-session": "^1.18.2",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/passport": "^1.0.17",
+    "@types/passport-google-oauth20": "^2.0.16",
     "prettier": "^3.5.3",
     "turbo": "^2.5.4",
     "typescript": "5.8.2"
@@ -20,5 +24,15 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "ethers": "^5.8.0",
+    "express-session": "^1.18.1",
+    "jsonwebtoken": "^9.0.2",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "react-router-dom": "^7.6.2"
+  }
 }
