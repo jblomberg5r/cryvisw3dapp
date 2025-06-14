@@ -1,4 +1,4 @@
-# Web Application - [Project Name Placeholder]
+# Web3 Application - CryVi SmartWeb3
 
 This project is a full-stack web application built with a modern technology stack, including React (Vite + TypeScript) for the frontend, Node.js (Express + TypeScript) for the backend, PostgreSQL as the database, and integration with blockchain services like Alchemy and Zerion.
 
