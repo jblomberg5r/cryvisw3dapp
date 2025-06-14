@@ -1,321 +1,248 @@
 # CryVi SmartWeb3
 
-CryVi SmartWeb3 is a multifaceted project. Its core includes a root-level framework (`src/`) for primary database schema management (using Drizzle ORM, configured via the root `drizzle.config.ts`) and potentially other shared utilities or core backend logic.
+Welcome to CryVi SmartWeb3! This project helps you build and interact with Web3 applications. It includes a full-stack web application with a user-friendly interface (frontend) and a powerful server-side component (backend).
 
-Alongside this, the project features a comprehensive full-stack web application within the `web-app/` directory. This web application is managed as a Turborepo monorepo and provides a suite of tools for Web3 development and interaction, built with React (Vite + TypeScript) for the frontend, Node.js (Express + TypeScript) for its backend, PostgreSQL, and integrations with blockchain services like Alchemy and Zerion.
+## What's Inside?
+
+This project is like a big toolbox for Web3 developers. Here's a peek at what it offers:
+
+*   **Frontend:** A modern website built with React, TypeScript, and Vite for a fast and smooth user experience. Styled with Tailwind CSS and Daisy UI.
+*   **Backend:** A robust server built with Node.js, Express, and TypeScript. It handles data, business logic, and communication with the blockchain.
+*   **Database:** Uses PostgreSQL, a reliable open-source database, to store application data.
+*   **Blockchain Tools:** Integrates with services like Alchemy (for talking to the Ethereum blockchain) and Zerion (for tracking DeFi portfolios).
+*   **Monorepo Power:** Uses Turborepo to manage the frontend and backend code together efficiently.
+*   **Containerization:** Includes Docker support, making it easy to set up and run the project consistently anywhere.
 
 ## Project Structure
 
-This project has a root-level structure managing a primary database schema and potentially other core functionalities, alongside a `web-app/` directory which contains a full-stack monorepo application.
+The project is organized to keep things tidy. The main parts are within the `web-app/` folder:
 
 ```
 cryvisw3dapp/
-├── .env                # Optional: Root-level environment variables for scripts or local root DB connection
-├── README.md           # This file: Project overview, setup, and usage instructions
-├── drizzle.config.ts   # Drizzle ORM configuration for the root `src/db/schema.ts`
-├── postcss.config.js   # PostCSS configuration (likely for any UI built/served from root `src/`)
-├── src/                # Root source code, primarily for database schema management and potentially a core backend
-│   ├── db/
-│   │   ├── migrate.ts  # Script to run database migrations for the schema defined in `src/db/schema.ts`
-│   │   └── schema.ts   # Primary Drizzle ORM database schema definitions for the overall project
-│   └── index.ts        # Potential main entry point for a root-level backend application or script execution
-├── tailwind.config.js  # Tailwind CSS configuration (likely for any UI built/served from root `src/`)
-├── tsconfig.json       # TypeScript configuration for the root project
-└── web-app/            # Contains the full-stack web application (Turborepo monorepo)
-    ├── apps/           # Individual applications (e.g., frontend, backend) within the web-app
-    ├── packages/       # Shared packages (e.g., ESLint configs, TypeScript configs) for the web-app
-    ├── docker-compose.yml # Docker Compose configuration for all web-app services
-    ├── package.json    # Root package.json for the Turborepo (manages web-app workspaces and scripts)
-    └── turbo.json      # Turborepo pipeline configuration
+├── README.md           # You are here! This guide explains the project.
+└── web-app/            # Contains the full-stack web application
+    ├── apps/           # Houses the frontend and backend applications
+    │   ├── frontend/   # Code for the website you see and interact with
+    │   └── backend/    # Code for the server that works behind the scenes
+    │       ├── src/      # Main source code for the backend
+    │       │   ├── db/
+    │       │   │   └── schema.ts # Describes the structure of the backend's database
+    │       │   └── ... (other backend files)
+    │       └── package.json # Lists dependencies for the backend
+    ├── packages/       # Shared code or configurations for the web-app
+    ├── docker-compose.yml # Instructions for Docker to run the app
+    ├── package.json    # Manages the web-app parts and shared scripts
+    └── turbo.json      # Configuration for Turborepo
 ```
 
-It's important to distinguish between the root-level `src/db/schema.ts` (managed by the root `drizzle.config.ts`) and any database setup specific to the `web-app/apps/backend/` application. The setup and script instructions provided in this README primarily focus on the `web-app/` monorepo and its constituent applications. Managing the root-level database schema might involve separate scripts or commands (e.g., defined in the root `package.json` if present, or run via `npx drizzle-kit` from the project root).
+The backend (`web-app/apps/backend/`) is where any database interactions are primarily managed.
 
-### Web Application Details (`web-app/`)
+## Technologies We Use
 
-The `web-app/` directory is a Turborepo-managed monorepo containing a full-stack web application. Its internal structure, detailed below, includes its own frontend, backend, and potentially shared packages:
+*   **Turborepo:** Helps manage the frontend and backend code efficiently.
+*   **React & Vite:** For building a fast and modern frontend.
+*   **TypeScript:** Adds an extra layer of reliability to JavaScript code.
+*   **Tailwind CSS & Daisy UI:** For styling the website beautifully.
+*   **Node.js & Express.js:** For building a strong backend server.
+*   **PostgreSQL:** A popular and robust database for storing information.
+*   **Alchemy SDK & Zerion API:** Tools for connecting to the blockchain world.
+*   **Docker:** A tool to package the application so it runs the same way everywhere.
 
-```
-cryvisw3dapp/
-├── web-app/
-│   ├── apps/
-│   │   ├── frontend/     # React (Vite + TypeScript) application
-│   │   │   ├── public/
-│   │   │   ├── src/
-│   │   │   ├── Dockerfile
-│   │   │   ├── vite.config.ts
-│   │   │   └── package.json
-│   │   └── backend/      # Node.js (Express + TypeScript) application
-│   │       ├── src/
-│   │       │   ├── db/
-│   │       │   │   ├── schema.ts
-│   │       │   │   └── migrate.ts
-│   │       │   ├── services/
-│   │       │   │   ├── alchemyService.ts
-│   │       │   │   └── zerionService.ts
-│   │       │   └── index.ts
-│   │       ├── drizzle/    # Drizzle ORM migration files
-│   │       ├── Dockerfile
-│   │       ├── drizzle.config.ts
-│   │       └── package.json
-│   ├── packages/         # (Optional) Shared packages for monorepo
-│   ├── docker-compose.yml
-│   ├── turbo.json
-│   └── package.json      # Root package.json for Turborepo
-└── README.md             # This file
-```
+## Before You Start (Prerequisites)
 
-## Technologies Used
+Make sure you have these tools installed on your computer:
 
-**Monorepo:**
-*   **Turborepo:** High-performance build system for JavaScript and TypeScript monorepos.
+*   **Node.js:** (Version 18 or newer is recommended) - This lets you run JavaScript code.
+*   **npm:** (Usually comes with Node.js) - This helps you install project dependencies.
+*   **Docker:** (Optional, but recommended for easier setup) - This helps run the application in a consistent environment.
+*   **Git:** For downloading (cloning) the project code.
 
-**Frontend:**
-*   **React:** JavaScript library for building user interfaces (with Vite).
-*   **TypeScript:** Superset of JavaScript for type safety.
-*   **Tailwind CSS:** Utility-first CSS framework.
-*   **Daisy UI:** UI component library for Tailwind CSS.
-*   **React Router:** Declarative routing for React applications.
-*   **Vite:** Fast frontend build tool.
+## Getting Started: Your First Steps
 
-**Backend:**
-*   **Node.js:** JavaScript runtime environment.
-*   **Express.js:** Web application framework for Node.js.
-*   **TypeScript:** For type safety.
-*   **Drizzle ORM:** TypeScript ORM for SQL databases.
-*   **PostgreSQL:** Powerful, open-source object-relational database system.
+Let's get the project up and running on your computer!
 
-**Blockchain Integration:**
-*   **Alchemy SDK:** Library for interacting with the Ethereum blockchain.
-*   **Zerion API:** API for tracking DeFi portfolios and interacting with various blockchain data.
+### 1. Download the Code
 
-**Containerization:**
-*   **Docker & Docker Compose:** For creating, deploying, and running applications in containers.
-
-## Prerequisites
-
-*   Node.js (v18 or later recommended)
-*   npm (or your preferred package manager like Yarn or pnpm, though scripts here use npm)
-*   Docker (if you plan to use Docker for development/deployment)
-*   Git
-
-## Getting Started
-
-### 1. Clone the Repository
+First, you need to get a copy of the project. Open your terminal (command prompt) and run:
 
 ```bash
 git clone <your-repository-url>
 cd cryvisw3dapp
-# Or your chosen project directory name
+# Replace <your-repository-url> with the actual link to the project.
+# cd cryvisw3dapp navigates you into the project's main folder.
 ```
 
-### 2. Install Dependencies
+### 2. Install Project Dependencies
 
-This project uses Turborepo. All commands below assume you are in the `cryvisw3dapp` (project root) directory. The Turborepo setup is within the `web-app` subdirectory.
+The project has several parts (frontend, backend) that need their own tools. We use Turborepo to manage this. Navigate to the `web-app` folder and install everything:
 
 ```bash
-cd web-app && npm install
+cd web-app
+npm install
+# This command looks at package.json files and downloads all necessary libraries.
 ```
 
-### 3. Environment Variables
+### 3. Set Up Environment Variables (Important Secrets!)
 
-Several services require API keys and specific configurations. These are managed via `.env` files.
+The backend needs some secret keys and settings to work, like API keys for Alchemy and Zerion, and database connection details.
 
-**Backend Configuration (`web-app/apps/backend/.env`):**
+*   Go to the `web-app/apps/backend/` folder.
+*   Create a new file named `.env`.
+*   Copy the content from the example below into your new `.env` file.
 
-Create a `.env` file in the `web-app/apps/backend/` directory. You can copy the template below or create the file from scratch.
+**Example for `web-app/apps/backend/.env`:**
 
 ```
 # Server Configuration
 PORT=3001 # Port for the backend server.
 
-# Database Connection (for local development outside Docker)
-# Ensure PostgreSQL is running and accessible at this URL.
-DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/myappdb" # Connection string for PostgreSQL (when running backend locally, outside Docker).
+# --- Database Connection ---
+# For running the backend directly on your computer (Option B in Database Setup)
+DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/myappdb"
 
-# API Keys (obtain these from the respective services)
-ALCHEMY_API_KEY="YOUR_ALCHEMY_API_KEY" # Your API key from Alchemy for Ethereum blockchain interaction.
-ZERION_API_KEY="YOUR_ZERION_API_KEY" # Your API key from Zerion for DeFi portfolio tracking. (Note: Check Zerion docs for exact format, may need Base64 encoding if used for Basic Auth).
+# For running the backend inside Docker (Option A in Database Setup)
+DATABASE_URL_DOCKER="postgresql://myuser:mypassword@db:5432/myappdb"
 
-# Docker Compose Database Credentials (used by web-app/docker-compose.yml)
-# These are defaults if not set in your shell environment when running docker-compose.
-POSTGRES_USER="myuser" # Username for the PostgreSQL database (used by Docker Compose).
-POSTGRES_PASSWORD="mypassword" # Password for the PostgreSQL database (used by Docker Compose).
-POSTGRES_DB="myappdb" # Name of the PostgreSQL database (used by Docker Compose).
-DATABASE_URL_DOCKER="postgresql://myuser:mypassword@db:5432/myappdb" # Connection string for PostgreSQL (used by the backend service when running inside Docker).
+# --- API Keys (Get these from the services themselves) ---
+ALCHEMY_API_KEY="YOUR_ALCHEMY_API_KEY"
+ZERION_API_KEY="YOUR_ZERION_API_KEY" # Check Zerion's docs for how to format this.
+
+# --- Docker Compose Database Settings ---
+# These are used by web-app/docker-compose.yml if not set elsewhere.
+POSTGRES_USER="myuser"
+POSTGRES_PASSWORD="mypassword"
+POSTGRES_DB="myappdb"
 ```
 
-*   Replace placeholder values with your actual API keys and database credentials.
-*   The `.env` file should be located at `web-app/apps/backend/.env`.
-*   For the Zerion API key: if it's intended for Basic Authentication, it might need to be a base64 encoded string of `username:password`, or simply the API key if it's a Bearer token. Always refer to the official Zerion API documentation and check the implementation in `web-app/apps/backend/src/services/zerionService.ts`.
+**Important:**
+*   Replace `"YOUR_ALCHEMY_API_KEY"` and `"YOUR_ZERION_API_KEY"` with your actual keys.
+*   For `DATABASE_URL`, `myuser`, `mypassword`, and `myappdb` are examples. You might need to change these based on your PostgreSQL setup.
+*   The `.env` file is ignored by Git, so your secrets stay safe on your computer.
 
-### 4. Database Setup (Drizzle ORM & PostgreSQL)
+### 4. Set Up the Database (PostgreSQL)
 
-Before starting the `web-app/` application's services, its dedicated database needs to be set up and the relevant migrations run. These migrations pertain to the schema used by the `web-app/apps/backend/` (which may be defined within that app or potentially utilize/extend the root `src/db/schema.ts`). Drizzle ORM, as configured within the `web-app/apps/backend/` application, uses its schema definitions to generate and apply SQL migration files, ensuring its database structure is up to date.
+The backend needs a PostgreSQL database to store information.
 
-**Choose one of the following options for database setup:**
+**Option A: Using Docker (Recommended for Beginners)**
 
-**Option A: Using Docker (Recommended)**
+This is the easiest way to get PostgreSQL running without installing it directly on your computer. Make sure Docker is running.
 
-This is the recommended approach for a consistent development environment. Ensure you are in the `cryvisw3dapp` (project root) directory for all commands.
-
-1.  **Start the PostgreSQL service using Docker Compose:**
-    This command starts only the database container in detached mode.
+1.  **Start the PostgreSQL Database with Docker Compose:**
+    Open your terminal in the `cryvisw3dapp/web-app/` directory (where the `docker-compose.yml` file is).
     ```bash
-    cd web-app && docker-compose up -d db
+    docker-compose up -d db
     ```
-2.  **Generate and Apply Migrations:**
-    *   `db:generate`: This command, when run for the `web-app/apps/backend` workspace (i.e., `cd web-app && npm run db:generate --workspace=@web-app/backend`), looks at its Drizzle schema configuration and creates SQL migration files (typically in `web-app/apps/backend/drizzle/`). You should run this whenever you change the schema relevant to the `web-app/apps/backend`.
-    *   `db:migrate`: This command (i.e., `cd web-app && npm run db:migrate --workspace=@web-app/backend`) applies any pending migration files to the database configured in `web-app/apps/backend/.env` (using `DATABASE_URL_DOCKER` for Docker or `DATABASE_URL` for local execution against the `web-app`'s database).
+    *   `docker-compose up`: Starts services defined in `docker-compose.yml`.
+    *   `-d`: Runs the database in the background (detached mode).
+    *   `db`: Tells Docker Compose to only start the service named 'db' (our PostgreSQL database).
 
-    Run the following commands from the `cryvisw3dapp` directory:
-    ```bash
-    # Generate migration files (if you've changed the schema)
-    cd web-app && npm run db:generate --workspace=@web-app/backend
-
-    # Apply migrations to the database
-    cd web-app && npm run db:migrate --workspace=@web-app/backend
-    ```
-    Alternatively, if the backend service container is already running (e.g., via `cd web-app && docker-compose up -d`), you can execute these commands within the container:
-    ```bash
-    # From the project root (cryvisw3dapp)
-    # cd web-app && docker-compose exec backend npm run db:generate
-    # cd web-app && docker-compose exec backend npm run db:migrate
-    ```
+    Your database is now running in Docker! The backend, when also run in Docker, will connect to it using `DATABASE_URL_DOCKER` from your `.env` file.
 
 **Option B: Local PostgreSQL Instance**
 
-If you prefer to use a PostgreSQL instance running directly on your machine (not in Docker):
+If you prefer, you can install PostgreSQL directly on your computer.
 
-1.  **Ensure PostgreSQL is Installed and Running:** Install PostgreSQL locally and make sure the service is active.
-2.  **Configure Connection:**
-    *   In `web-app/apps/backend/.env`, make sure the `DATABASE_URL` variable points to your local PostgreSQL instance (e.g., `postgresql://YOUR_USER:YOUR_PASSWORD@localhost:5432/YOUR_DB_NAME`).
-3.  **Create Database (if needed):** Manually create the database specified in `DATABASE_URL` if it doesn't already exist.
-4.  **Generate and Apply Migrations:**
-    Run the following commands from the `cryvisw3dapp` directory:
+1.  **Install and Run PostgreSQL:** Download and install PostgreSQL. Make sure the service is running.
+2.  **Create a Database:** Create a new database (e.g., `myappdb`) and a user (e.g., `myuser`) with a password (e.g., `mypassword`).
+3.  **Configure `DATABASE_URL`:** In your `web-app/apps/backend/.env` file, make sure the `DATABASE_URL` variable correctly points to your local PostgreSQL instance (e.g., `postgresql://myuser:mypassword@localhost:5432/myappdb`).
+
+**Database Structure (Schema):**
+The structure of the database tables is defined in `web-app/apps/backend/src/db/schema.ts`. If you are using an ORM or migration tool with your PostgreSQL setup (other than Drizzle, which has been removed), you would manage database changes (migrations) according to that tool's instructions. This README now provides general guidance for PostgreSQL setup.
+
+## How to Run the Application
+
+You can run the frontend and backend separately for development or run everything together using Docker.
+
+**All commands below should be run from the `cryvisw3dapp/web-app/` directory.**
+
+### Running in Development Mode (Without Docker)
+
+This is useful for actively developing and seeing changes quickly.
+
+*   **Start the Backend Server:**
     ```bash
-    # Generate migration files (if you've changed the schema)
-    cd web-app && npm run db:generate --workspace=@web-app/backend
+    npm run dev --workspace=@web-app/backend
+    ```
+    This usually starts the backend on `http://localhost:3001`. It will watch for file changes and restart automatically.
 
-    # Apply migrations to the database
-    cd web-app && npm run db:migrate --workspace=@web-app/backend
+*   **Start the Frontend Development Server:**
+    In a **new terminal window** (also in the `cryvisw3dapp/web-app/` directory):
+    ```bash
+    npm run dev --workspace=@web-app/frontend
+    ```
+    This usually starts the frontend on `http://localhost:5173` (Vite's default) or similar. Your browser might open automatically.
+
+### Running with Docker (Recommended for a Complete Setup)
+
+Docker makes it easy to run the entire application (frontend, backend, and database) together.
+
+1.  **Ensure Prerequisites:**
+    *   Docker is installed and running.
+    *   Your `web-app/apps/backend/.env` file is correctly configured, especially `DATABASE_URL_DOCKER` and your API keys.
+
+2.  **Build and Start All Services:**
+    In your terminal, from the `cryvisw3dapp/web-app/` directory:
+    ```bash
+    docker-compose up --build
+    ```
+    *   `--build`: Tells Docker to build the images for the frontend and backend before starting. You only need to do this the first time or if you change their Dockerfiles.
+    *   This command will show logs from all services in your terminal.
+
+    To run in the background (detached mode):
+    ```bash
+    docker-compose up -d --build
     ```
 
-**Drizzle Studio (Optional Database GUI):**
+3.  **Accessing the Application:**
+    Once Docker is finished:
+    *   **Frontend (Website):** Open your browser to `http://localhost:8080`
+    *   **Backend API:** Is available at `http://localhost:3001` (the frontend uses this internally).
 
-Drizzle Studio provides a web interface to view and manage your database schema and data.
-To use it, run the following command from the `cryvisw3dapp` (project root) directory. It will use the `DATABASE_URL` from `web-app/apps/backend/.env`.
-```bash
-cd web-app && npm run db:studio --workspace=@web-app/backend
-```
+4.  **Viewing Logs (if running in background):**
+    ```bash
+    docker-compose logs -f # Shows logs from all services
+    docker-compose logs -f backend # Shows logs only for the backend
+    ```
+
+5.  **Stopping the Application:**
+    *   If running in the foreground (logs visible), press `Ctrl + C` in the terminal.
+    *   If running in the background (detached mode):
+        ```bash
+        docker-compose down
+        ```
+    *   To stop and remove data volumes (like database data, **use with caution!**):
+        ```bash
+        docker-compose down -v
+        ```
 
 ## Available Scripts
 
-This project uses Turborepo to manage the `web-app` monorepo. Scripts can be run at the root of the monorepo (`web-app/package.json`) or within specific applications (workspaces) like `frontend` or `backend`.
+Here are some useful commands you can run from the `cryvisw3dapp/web-app/` directory using `npm run <script_name>`. Use the `--workspace` flag to target a specific app (frontend or backend).
 
-**All commands listed below should be executed from the `cryvisw3dapp` (project root) directory.**
+**General (run from `web-app/`):**
 
-**Monorepo Root Level (scripts in `web-app/package.json`):**
+*   `npm run dev`: Tries to start both frontend and backend in development mode.
+*   `npm run build`: Creates production-ready versions of both frontend and backend.
 
-These commands typically orchestrate actions across multiple applications within the `web-app`.
+**Backend (`--workspace=@web-app/backend`):**
 
-*   `cd web-app && npm run dev`: Starts both the frontend and backend applications in development mode (using their respective `dev` scripts).
-*   `cd web-app && npm run build`: Builds both the frontend and backend applications for production.
+*   `npm run dev --workspace=@web-app/backend`: Starts backend in development mode (watches files).
+*   `npm run build --workspace=@web-app/backend`: Compiles backend code for production.
+*   `npm run start --workspace=@web-app/backend`: Runs the compiled backend (for production).
 
-**Application-Specific Scripts (Workspaces):**
+**Frontend (`--workspace=@web-app/frontend`):**
 
-To run scripts for a specific application (e.g., backend or frontend), you use the `--workspace` flag with `npm run`.
-
-**Backend (`web-app/apps/backend`):**
-Run these using `cd web-app && npm run <script_name> --workspace=@web-app/backend` from the `cryvisw3dapp` directory.
-
-*   `dev`: Starts the backend server with `nodemon` for automatic reloading on file changes.
-*   `build`: Compiles the backend TypeScript code to JavaScript.
-*   `start`: Starts the compiled backend server (typically for production).
-*   `db:generate`: Generates Drizzle ORM migration files for the `web-app/apps/backend` based on its specific schema configuration.
-*   `db:migrate`: Applies pending Drizzle ORM migrations to the database used by `web-app/apps/backend`.
-*   `db:studio`: Starts Drizzle Studio, a GUI for viewing and managing your database.
-
-**Frontend (`web-app/apps/frontend`):**
-Run these using `cd web-app && npm run <script_name> --workspace=@web-app/frontend` from the `cryvisw3dapp` directory.
-
-*   `dev`: Starts the Vite development server for the React frontend, enabling features like Hot Module Replacement (HMR).
-*   `build`: Builds the React application for production, optimizing assets and code.
-*   `preview`: Serves the production build of the frontend locally for previewing before deployment.
-
-## Running with Docker
-
-The `web-app/docker-compose.yml` file defines and orchestrates the multi-container application, including the frontend, backend, and database services.
-
-**All Docker Compose commands should be run from the `cryvisw3dapp` (project root) directory, prefixed with `cd web-app && ` to ensure they execute in the context where `docker-compose.yml` is located.**
-
-1.  **Prerequisites: Environment Variables**
-    *   Before building or running Docker containers, ensure you have correctly configured the `.env` file at `web-app/apps/backend/.env`.
-    *   **Crucially, the `DATABASE_URL_DOCKER` variable must be set correctly**, as this is what the backend service will use to connect to the PostgreSQL service within the Docker network.
-    *   Other API keys (`ALCHEMY_API_KEY`, `ZERION_API_KEY`) should also be in place if you expect those services to work within the Dockerized application.
-
-2.  **Build and Start Services:**
-    *   **To build (or rebuild) images and start all services in the foreground (logs visible):**
-        ```bash
-        cd web-app && docker-compose up --build
-        ```
-    *   **To build (or rebuild) and start all services in detached mode (runs in background):**
-        ```bash
-        cd web-app && docker-compose up -d --build
-        ```
-    *   If you only want to start services without rebuilding (e.g., if images are already built and up-to-date):
-        ```bash
-        cd web-app && docker-compose up -d
-        ```
-
-3.  **Accessing Services:**
-    Once the containers are running:
-    *   **Frontend:** Accessible at `http://localhost:8080` (This is typically served by an Nginx container, as defined in `web-app/docker-compose.yml`).
-    *   **Backend API:** Accessible at `http://localhost:3001` (The backend service itself).
-    *   **PostgreSQL Database:** The database service (`db`) within Docker is typically mapped to `localhost:5432` on your host machine, allowing you to connect with external database tools if needed.
-
-4.  **Running Database Migrations (with services running):**
-    If your services are already running (e.g., via `docker-compose up -d`), and you need to apply or generate database migrations, use `docker-compose exec` to run commands inside the `backend` service container:
-    ```bash
-    # To apply pending migrations:
-    cd web-app && docker-compose exec backend npm run db:migrate
-
-    # To generate new migration files (after schema changes):
-    cd web-app && docker-compose exec backend npm run db:generate
-    ```
-    (Remember to have run `npm install` within the `web-app` directory so that `node_modules` including Drizzle CLI are available to be copied into the Docker image).
-
-5.  **Viewing Logs (if running in detached mode):**
-    ```bash
-    cd web-app && docker-compose logs -f # View logs for all services
-    cd web-app && docker-compose logs -f backend # View logs for a specific service
-    ```
-
-6.  **Stopping Services:**
-    *   **To stop all running services:**
-        ```bash
-        cd web-app && docker-compose down
-        ```
-    *   **To stop services and remove associated volumes (including database data, use with caution!):**
-        ```bash
-        cd web-app && docker-compose down -v
-        ```
+*   `npm run dev --workspace=@web-app/frontend`: Starts frontend in development mode (fast updates).
+*   `npm run build --workspace=@web-app/frontend`: Builds frontend for production.
+*   `npm run preview --workspace=@web-app/frontend`: Lets you view the production build locally.
 
 ## Contributing
 
-Contributions are welcome! We appreciate any help you can offer to improve the project.
-
-Please refer to the `CONTRIBUTING.md` file for guidelines on how to:
-*   Report bugs and suggest features
-*   Set up your development environment for contributing
-*   Submit pull requests
-*   Follow coding standards
-
-(TODO: Create a `CONTRIBUTING.md` file with detailed contribution guidelines.)
+We'd love your help to make this project better! (A `CONTRIBUTING.md` file with more details will be added later).
 
 ## License
 
-[Specify the license for your project, e.g., MIT]
+[Specify the license for your project, e.g., MIT License]
 
 ---
-*Remember to replace placeholders like "<your-repository-url>", and license information.*
+*Remember to replace placeholders like `<your-repository-url>` and update the license information.*
