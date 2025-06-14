@@ -11,13 +11,31 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.20",
+    "@mui/lab": "^5.0.0-alpha.170",
+    "@mui/material": "^5.15.20",
+    "@mui/x-tree-view": "^7.9.0",
+    "ace-builds": "^1.35.1",
+    "ethers": "^6.13.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-ace": "^11.0.1",
+    "react-dom": "^19.1.0",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.23.1",
+    "remark-gfm": "^4.0.0",
+    "uuid": "^9.0.1",
+    "viem": "^2.17.0",
+    "web3modal": "^1.9.12",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@types/react-markdown": "^9.0.1",
+    "@types/uuid": "^9.0.8",
     "@vitejs/plugin-react": "^4.4.1",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
