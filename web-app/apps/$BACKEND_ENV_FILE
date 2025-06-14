@@ -1,0 +1,7 @@
+
+# Docker Compose DB credentials (can be overridden by shell env)
+POSTGRES_USER=myuser
+POSTGRES_PASSWORD=mypassword
+POSTGRES_DB=myappdb
+DATABASE_URL_DOCKER=postgresql://myuser:mypassword@db:5432/myappdb
+DATABASE_URL=postgresql://myuser:mypassword@localhost:5432/myappdb

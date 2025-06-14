@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "lib": ["es6", "dom"],
+    "allowJs": true,
+    "noImplicitAny": true,
+    "strict": true, // Usually a good default
+    "moduleResolution": "node", // Important for commonjs
+    "skipLibCheck": true, // Often useful in projects
+    "forceConsistentCasingInFileNames": true // Good practice
+  },
+  "include": ["src/**/*"], // Ensure only src is compiled
+  "exclude": ["node_modules", "dist"] // Don't compile output or deps
+}
