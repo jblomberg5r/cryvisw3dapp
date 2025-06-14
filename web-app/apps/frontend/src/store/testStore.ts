@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 import { v4 as uuidv4 } from 'uuid';
 import { TestResult, TestStatus } from '../types/smartcontract';
+import { logActivity } from './activityStore'; // Import the helper
 
 interface TestState {
   testResults: TestResult[];
   isTesting: boolean;
-  runTests: (contractIdOrPath: string) => Promise<void>; // Simulate async test running
+  runTests: (contractIdOrPath: string) => Promise<void>;
   clearTestResults: () => void;
 }
 
@@ -46,49 +47,42 @@ export const useTestStore = create<TestState>((set, get) => ({
   testResults: [],
   isTesting: false,
   runTests: async (contractIdOrPath: string) => {
-    set({ isTesting: true, testResults: [] }); // Clear previous results and set loading
+    set({ isTesting: true, testResults: [] });
+    logActivity('TEST_RUN_STARTED', `Test run initiated for "${contractIdOrPath}".`, { target: contractIdOrPath }, 'PlayCircleOutline');
 
-    // Simulate test execution delay
-    // In a real app, this would involve backend calls or complex client-side processing.
     await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 1500));
-
-    // Simulate different outcomes
     const randomOutcome = Math.random();
-    let results: TestResult[] = [];
+    let finalResults: TestResult[] = [];
 
-    if (randomOutcome < 0.3) { // All pass
-      results = [
+    if (randomOutcome < 0.3) {
+      finalResults = [
         { ...mockPassedTest, id: uuidv4(), testName: `Initialization test for ${contractIdOrPath}` },
         { ...mockPassedTest, id: uuidv4(), testName: `Access control basic for ${contractIdOrPath}` },
-        { ...mockPassedTest, id: uuidv4(), testName: `State change verification for ${contractIdOrPath}` },
       ];
-    } else if (randomOutcome < 0.7) { // Mix of pass and fail
-      results = [
-        { ...mockPassedTest, id: uuidv4(), testName: `Positive case test for ${contractIdOrPath}` },
-        { ...mockFailedTest, id: uuidv4(), testName: `Negative case failure expected for ${contractIdOrPath}`},
-        { ...mockPassedTest, id: uuidv4(), testName: `Another positive path for ${contractIdOrPath}` },
-        { ...mockSkippedTest, id: uuidv4(), testName: `Future feature test (skipped) for ${contractIdOrPath}`},
+    } else if (randomOutcome < 0.7) {
+      finalResults = [
+        { ...mockPassedTest, id: uuidv4(), testName: `Positive case for ${contractIdOrPath}` },
+        { ...mockFailedTest, id: uuidv4(), testName: `Negative case for ${contractIdOrPath}`},
+        { ...mockSkippedTest, id: uuidv4(), testName: `Future feature (skipped) for ${contractIdOrPath}`},
       ];
-    } else { // Mostly fail (simulating a problematic contract)
-       results = [
+    } else {
+       finalResults = [
         { ...mockFailedTest, id: uuidv4(), testName: `Core functionality A broken in ${contractIdOrPath}`},
-        { ...mockFailedTest, id: uuidv4(), testName: `Core functionality B broken in ${contractIdOrPath}`},
-        { ...mockPassedTest, id: uuidv4(), testName: `Basic getter still works in ${contractIdOrPath}` },
+        { ...mockPassedTest, id: uuidv4(), testName: `Basic getter works in ${contractIdOrPath}` },
       ];
     }
 
-    // Simulate some tests are still running then complete
-    const intermediateResults = results.map(r => ({...r, status: 'running' as TestStatus, id: uuidv4() }));
+    const intermediateResults = finalResults.map(r => ({...r, status: 'running' as TestStatus, id: uuidv4() }));
     set({ testResults: intermediateResults });
-
     await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1000));
 
-    set({ testResults: results, isTesting: false });
-    console.log(`Mock tests run for: ${contractIdOrPath}. Results populated.`);
-    // Note: Actual test execution (compilation, deployment, test running)
-    // will require backend or advanced client-side (WASM) solutions.
+    set({ testResults: finalResults, isTesting: false });
+    const passedCount = finalResults.filter(r => r.status === 'passed').length;
+    const failedCount = finalResults.filter(r => r.status === 'failed').length;
+    logActivity('TEST_RUN_COMPLETED', `Test run for "${contractIdOrPath}" completed. Passed: ${passedCount}, Failed: ${failedCount}.`, { target: contractIdOrPath, passed: passedCount, failed: failedCount, total: finalResults.length }, failedCount > 0 ? 'ReportProblem' : 'CheckCircleOutline');
   },
   clearTestResults: () => {
     set({ testResults: [], isTesting: false });
+    logActivity('INFO', `Test results cleared.`, {}, 'DeleteSweep');
   },
 }));

@@ -21,14 +21,18 @@ export interface MarketplaceTemplate {
 
 export const MarketplaceCategories = [
   "All", // For filtering
-  "Tokens",
-  "NFTs",
-  "DeFi",
-  "DAOs",
-  "Utilities",
-  "Games",
-  "Social",
-  "Other",
+  "Tokens", // ERC20, ERC721, ERC1155 specific templates
+  "NFTs",   // More complex NFT systems, marketplaces, utilities
+  "DeFi",   // Staking, Swaps, Lending, Yield Farming
+  "DAOs",   // Governance, Voting, Treasury Management
+  "Gaming", // Game mechanics, On-chain assets for games
+  "Utility",// Common tools, Libraries, Proxies
+  "Security",// Multisigs, Escrows, Access Control patterns
+  "Social", // Decentralized identity, Social networks, Reputation
+  "Storage",// Decentralized storage interaction patterns
+  "Identity",// DID, Verifiable Credentials related contracts
+  "Bridge", // Cross-chain bridge related contracts/logic
+  "Other",  // Miscellaneous templates
 ] as const;
 
 export type MarketplaceCategory = typeof MarketplaceCategories[number];

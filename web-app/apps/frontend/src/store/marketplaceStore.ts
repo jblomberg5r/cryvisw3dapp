@@ -19,7 +19,7 @@ const mockMarketplaceTemplates: MarketplaceTemplate[] = [
     category: 'Tokens',
     author: 'OpenZeppelin (Modified)',
     version: '1.0.0',
-    tags: ['erc20', 'fungible', 'token', 'basic'],
+    tags: ['erc20', 'fungible', 'token', 'basic', 'mintable', 'burnable'],
     fullContractCode: `pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -47,10 +47,10 @@ contract BasicERC20 is ERC20, ERC20Burnable, Ownable {
     id: uuidv4(),
     name: 'Simple NFT Collection (ERC721)',
     description: 'A simple ERC721 Non-Fungible Token collection with sequential ID minting.',
-    category: 'NFTs',
+    category: 'NFTs', // Could also be 'Tokens' if we have a sub-category filter later
     author: 'Community Contributor',
     version: '0.9.0',
-    tags: ['erc721', 'nft', 'collectible', 'simple'],
+    tags: ['erc721', 'nft', 'collectible', 'simple', 'autoincrement'],
     fullContractCode: `pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
@@ -80,11 +80,11 @@ contract SimpleNFT is ERC721, Ownable {
   {
     id: uuidv4(),
     name: 'Basic Staking Contract',
-    description: 'Allows users to stake ERC20 tokens and earn rewards over time.',
+    description: 'Allows users to stake ERC20 tokens and earn rewards over time. (Conceptual)',
     category: 'DeFi',
     author: 'DeFi Builder Co.',
     version: '1.1.0',
-    tags: ['defi', 'staking', 'erc20', 'rewards', 'yield'],
+    tags: ['defi', 'staking', 'erc20', 'rewards', 'yield', 'finance'],
     fullContractCode: `pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -140,11 +140,11 @@ contract BasicStaking is Ownable, ReentrancyGuard {
   {
     id: uuidv4(),
     name: 'Simple DAO Voting',
-    description: 'A basic contract for creating proposals and allowing token holders to vote.',
+    description: 'A basic contract for creating proposals and allowing token holders to vote. (Conceptual)',
     category: 'DAOs',
     author: 'Governance Guild',
     version: '0.5.0',
-    tags: ['dao', 'governance', 'voting', 'erc20-votes'],
+    tags: ['dao', 'governance', 'voting', 'erc20-votes', 'organization'],
     fullContractCode: `pragma solidity ^0.8.20;
 
 // This is a very simplified conceptual structure.
@@ -179,18 +179,66 @@ contract SimpleDAOVoting {
     readme: `# Simple DAO Voting\n\nA conceptual template for on-chain governance.\n\n**Note:** This is **highly simplified** and not a production-ready DAO. Real DAOs are complex and should leverage well-audited frameworks like OpenZeppelin Governor along with compatible token standards (e.g., ERC20Votes, ERC721Votes).\n\n**Conceptual Features:**\n- Proposal creation (by users with sufficient voting power).\n- Voting on proposals (For, Against, Abstain).\n- Requires a governance token that implements voting power (e.g., ERC20Votes).`,
     usageCount: 30,
     rating: 3.5,
+  },
+  {
+    id: uuidv4(),
+    name: 'Multisig Wallet',
+    description: 'A wallet where multiple signatures are required to approve transactions.',
+    category: 'Security',
+    author: 'ConsenSys Diligence (Inspired)',
+    version: '1.2.0',
+    tags: ['multisig', 'wallet', 'security', 'access-control'],
+    fullContractCode: `pragma solidity ^0.8.20;
+// Example based on Gnosis Safe
+// This is a highly simplified representation. Real multisigs are complex.
+contract MultiSigWallet {
+    // ... state variables for owners, confirmations, transactions ...
+    constructor(/* address[] memory _owners, uint256 _requiredSignatures */) {
+        // ...
+    }
+    // ... functions for submitting, confirming, and executing transactions ...
+}`,
+    readme: `# Multisig Wallet\n\nProvides enhanced security for managing funds or contract ownership by requiring multiple parties to approve transactions.\n\n**Note:** This is a placeholder for a complex contract type. For real use, consider audited solutions like Gnosis Safe.`,
+    iconUrl: 'https://example.com/icons/multisig.png',
+    usageCount: 120,
+    rating: 4.8,
+  },
+  {
+    id: uuidv4(),
+    name: 'Upgradeable Contract (Proxy)',
+    description: 'Basic UUPS proxy pattern for upgradeable smart contracts.',
+    category: 'Utility',
+    author: 'OpenZeppelin',
+    version: '1.0.0',
+    tags: ['proxy', 'upgradeable', 'uups', 'utility'],
+    fullContractCode: `pragma solidity ^0.8.20;
+import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
+
+contract MyUpgradeableProxy is ERC1967Proxy {
+    constructor(address _logic, bytes memory _data) ERC1967Proxy(_logic, _data) {}
+}
+
+// Your logic contract (e.g., MyLogicV1) would then inherit UUPSUpgradeable.
+// import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+// import "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
+// import "@openzeppelin/contracts/access/OwnableUpgradeable.sol";
+// contract MyLogicV1 is Initializable, UUPSUpgradeable, OwnableUpgradeable { ... }`,
+    readme: `# Upgradeable Contract (UUPS Proxy)\n\nThis template demonstrates the UUPS proxy pattern using OpenZeppelin contracts, allowing you to upgrade your smart contract logic while preserving state and address.\n\n1. Deploy your logic contract (e.g., `MyLogicV1`).\n2. Deploy this `MyUpgradeableProxy` contract, providing the address of the logic contract and any initialization data.\n\nUsers interact with the proxy address. Upgrades are managed by the logic contract itself (via `UUPSUpgradeable`).`,
+    iconUrl: 'https://example.com/icons/proxy.png',
+    usageCount: 70,
+    rating: 4.3,
   }
 ];
 
 export const useMarketplaceStore = create<MarketplaceState>((set, get) => ({
-  templates: [],
+  templates: [], // Initialized empty, fetched by fetchTemplates
   isLoading: false,
   selectedTemplate: null,
 
   fetchTemplates: async () => {
-    set({ isLoading: true, templates: [] });
+    set({ isLoading: true });
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 700)); // Shorter delay
     set({ templates: mockMarketplaceTemplates, isLoading: false });
   },
 

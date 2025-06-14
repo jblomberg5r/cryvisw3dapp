@@ -9,6 +9,7 @@ import {
   defaultERC721Config,
   defaultERC1155Config,
 } from '../types/token';
+import { logActivity } from './activityStore'; // Import the helper
 
 interface TokenCreatorState {
   tokenConfig: PartialTokenConfig;

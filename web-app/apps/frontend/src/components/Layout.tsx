@@ -3,6 +3,7 @@ import { ThemeProvider, CssBaseline, AppBar, Toolbar, IconButton, Typography, Bo
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { Outlet, Link as RouterLink } from 'react-router-dom';
 import { lightTheme, darkTheme } from '../theme/theme';
+import ConnectWalletButton from './wallet/ConnectWalletButton'; // Import ConnectWalletButton
 
 // Define the shape of the context
 interface ThemeContextType {
@@ -55,6 +56,21 @@ const Layout: React.FC = () => {
             <Button color="inherit" component={RouterLink} to="/marketplace">
               Marketplace
             </Button>
+            <Button color="inherit" component={RouterLink} to="/defi">
+              DeFi
+            </Button>
+            <Button color="inherit" component={RouterLink} to="/portfolio">
+              Portfolio
+            </Button>
+            <Button color="inherit" component={RouterLink} to="/tax-calculator">
+              Tax Calculator
+            </Button>
+            <Button color="inherit" component={RouterLink} to="/analytics">
+              Dashboard
+            </Button>
+            <Box sx={{ flexGrow: 0, ml: 2 }}>
+              <ConnectWalletButton />
+            </Box>
             <IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit">
               {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
             </IconButton>
