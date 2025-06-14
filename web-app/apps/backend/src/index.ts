@@ -26,7 +26,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET || 'yourDefaultSessionSecret', // Should be in .env
     resave: false,
-    saveUninitialized: false, // true might be needed for some OAuth flows if session is not established before redirect
+    saveUninitialized: true, // true might be needed for some OAuth flows if session is not established before redirect
     cookie: { secure: process.env.NODE_ENV === 'production' }, // Use secure cookies in production
   })
 );

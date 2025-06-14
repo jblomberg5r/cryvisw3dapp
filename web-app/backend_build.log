@@ -1,0 +1,65 @@
+
+> @web-app/backend@1.0.0 build
+> tsc
+
+src/auth/auth.controller.ts(1,77): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+src/auth/auth.controller.ts(2,10): error TS2724: '"./auth.service"' has no exported member named 'AuthService'. Did you mean 'authService'?
+src/auth/auth.controller.ts(11,20): error TS1206: Decorators are not valid here.
+src/auth/auth.controller.ts(16,31): error TS18046: 'error' is of type 'unknown'.
+src/auth/auth.controller.ts(22,19): error TS1206: Decorators are not valid here.
+src/auth/auth.controller.ts(32,31): error TS18046: 'error' is of type 'unknown'.
+src/auth/auth.controller.ts(32,72): error TS18046: 'error' is of type 'unknown'.
+src/auth/auth.module.ts(1,24): error TS2307: Cannot find module '@nestjs/common' or its corresponding type declarations.
+src/auth/auth.module.ts(3,10): error TS2724: '"./auth.service"' has no exported member named 'AuthService'. Did you mean 'authService'?
+src/auth/auth.module.ts(4,27): error TS2307: Cannot find module '@nestjs/jwt' or its corresponding type declarations.
+src/auth/dto/auth.dto.ts(4,4): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+src/auth/dto/auth.dto.ts(5,4): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+src/auth/dto/auth.dto.ts(6,3): error TS2564: Property 'email' has no initializer and is not definitely assigned in the constructor.
+src/auth/dto/auth.dto.ts(10,4): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+src/auth/dto/auth.dto.ts(11,4): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+src/auth/dto/auth.dto.ts(12,3): error TS2564: Property 'email' has no initializer and is not definitely assigned in the constructor.
+src/auth/dto/auth.dto.ts(14,4): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+src/auth/dto/auth.dto.ts(15,4): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+src/auth/dto/auth.dto.ts(16,4): error TS1240: Unable to resolve signature of property decorator when called as an expression.
+  Argument of type 'undefined' is not assignable to parameter of type 'Object'.
+src/auth/dto/auth.dto.ts(17,3): error TS2564: Property 'otp' has no initializer and is not definitely assigned in the constructor.
+src/index.ts(49,37): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<express.Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+src/index.ts(54,75): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(o: { [s: string]: string; } | ArrayLike<string>): string[]', gave the following error.
+    Argument of type '{ [type: string]: string; } | undefined' is not assignable to parameter of type '{ [s: string]: string; } | ArrayLike<string>'.
+      Type 'undefined' is not assignable to type '{ [s: string]: string; } | ArrayLike<string>'.
+  Overload 2 of 2, '(o: {}): any[]', gave the following error.
+    Argument of type '{ [type: string]: string; } | undefined' is not assignable to parameter of type '{}'.
+      Type 'undefined' is not assignable to type '{}'.
+src/index.ts(66,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<express.Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+src/index.ts(71,75): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(o: { [s: string]: string; } | ArrayLike<string>): string[]', gave the following error.
+    Argument of type '{ [type: string]: string; } | undefined' is not assignable to parameter of type '{ [s: string]: string; } | ArrayLike<string>'.
+      Type 'undefined' is not assignable to type '{ [s: string]: string; } | ArrayLike<string>'.
+  Overload 2 of 2, '(o: {}): any[]', gave the following error.
+    Argument of type '{ [type: string]: string; } | undefined' is not assignable to parameter of type '{}'.
+      Type 'undefined' is not assignable to type '{}'.
+src/index.ts(90,44): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => express.Response<any, Record<string, any>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Response<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+src/index.ts(110,43): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<express.Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+npm ERR! Lifecycle script `build` failed with error:
+npm ERR! Error: command failed
+npm ERR!   in workspace: @web-app/backend@1.0.0
+npm ERR!   at location: /app/web-app/apps/backend
