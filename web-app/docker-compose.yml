@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001" # Exposes backend on host port 3001
+    env_file:
+      - ./apps/backend/.env # Loads environment variables from backend's .env
+    environment:
+      # Override DATABASE_URL to use the db service hostname
+      DATABASE_URL: \${DATABASE_URL_DOCKER:-postgresql://myuser:mypassword@db:5432/myappdb}
+      # NODE_ENV: development # Or production
+    volumes:
+      - ./apps/backend/src:/usr/src/app/src # Mount src for development (optional)
+      # - ./apps/backend/drizzle:/usr/src/app/drizzle # If you want to keep drizzle studio accessible or run migrations from host
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80" # Exposes frontend (Nginx) on host port 8080
+    # volumes:
+    #   - ./apps/frontend/src:/app/src # For development with Vite, this setup is more complex due to HMR
+    depends_on:
+      - backend # Ensures backend is ready before frontend (for API calls during build/runtime if any)
+    networks:
+      - app-network
+
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432" # Exposes PostgreSQL on host port 5432 (be cautious with this in production)
+    environment:
+      POSTGRES_USER: \${POSTGRES_USER:-myuser}
+      POSTGRES_PASSWORD: \${POSTGRES_PASSWORD:-mypassword}
+      POSTGRES_DB: \${POSTGRES_DB:-myappdb}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist database data
+    networks:
+      - app-network
+
+volumes:
+  postgres_data: # Defines the named volume for data persistence
+
+networks:
+  app-network:
+    driver: bridge
