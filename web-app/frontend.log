@@ -2,9 +2,183 @@
 > @web-app/frontend@0.0.0 dev
 > vite
 
-Port 5173 is in use, trying another one...
 
-  VITE v6.3.5  ready in 829 ms
+  VITE v6.3.5  ready in 776 ms
 
-  ➜  Local:   http://localhost:5174/
+  ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
+9:46:43 PM [vite] (client) Pre-transform error: Failed to resolve import "@web3modal/ethers/react" from "src/App.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/App.tsx:4:77
+  19 |  import { BrowserRouter, Routes, Route } from "react-router-dom";
+  20 |  import { initWeb3Modal } from "./config/web3modalConfig";
+  21 |  import { useWeb3ModalAccount, useWeb3ModalProvider, useWeb3ModalState } from "@web3modal/ethers/react";
+     |                                                                                ^
+  22 |  import { useWalletStore } from "./store/walletStore";
+  23 |  import { useNetworkStore } from "./store/networkStore";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "zustand" from "src/store/networkStore.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/store/networkStore.ts:1:23
+  1  |  import { create } from "zustand";
+     |                          ^
+  2  |  import { DeploymentNetwork } from "../types/network";
+  3  |  import { supportedNetworks, defaultDevelopmentNetworks } from "../config/networks";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@web3modal/ethers/react" from "src/config/web3modalConfig.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/config/web3modalConfig.ts:1:47
+  1  |  import { createWeb3Modal, defaultConfig } from "@web3modal/ethers/react";
+     |                                                  ^
+  2  |  import { supportedNetworks } from "./networks";
+  3  |  import { DeploymentNetwork } from "../types/network";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "zustand" from "src/store/activityStore.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/store/activityStore.ts:1:23
+  1  |  import { create } from "zustand";
+     |                          ^
+  2  |  import { v4 as uuidv4 } from "uuid";
+  3  |  import { ActivityLog, ActivityType } from "../types/activity";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/AnalyticsPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/AnalyticsPage.tsx:2:71
+  17 |  var _s = $RefreshSig$();
+  18 |  import React from "react";
+  19 |  import { Container, Typography, Grid, Paper, Box, Divider, Chip } from "@mui/material";
+     |                                                                          ^
+  20 |  import ActivityFeedDisplay from "../components/activity/ActivityFeedDisplay";
+  21 |  import { useProjectStore } from "../store/projectStore";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/StakingPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/StakingPage.tsx:7:7
+  33 |    Chip,
+  34 |    Alert
+  35 |  } from "@mui/material";
+     |          ^
+  36 |  import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+  37 |  import GrainIcon from "@mui/icons-material/Grain";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/DeFiPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/DeFiPage.tsx:2:64
+  17 |  var _s = $RefreshSig$();
+  18 |  import React from "react";
+  19 |  import { Container, Typography, Grid, Paper, Button, Box } from "@mui/material";
+     |                                                                   ^
+  20 |  import { useNavigate } from "react-router-dom";
+  21 |  import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/components/Layout.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/components/Layout.tsx:2:97
+  17 |  var _s = $RefreshSig$(), _s2 = $RefreshSig$();
+  18 |  import React, { createContext, useState, useMemo, useContext } from "react";
+  19 |  import { ThemeProvider, CssBaseline, AppBar, Toolbar, IconButton, Typography, Box, Button } from "@mui/material";
+     |                                                                                                    ^
+  20 |  import { Brightness4, Brightness7 } from "@mui/icons-material";
+  21 |  import { Outlet, Link as RouterLink } from "react-router-dom";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/PurchaseCryptoPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/PurchaseCryptoPage.tsx:2:78
+  17 |  var _s = $RefreshSig$();
+  18 |  import React, { useState } from "react";
+  19 |  import { Container, Typography, Box, Paper, Button, Alert, Modal, Link } from "@mui/material";
+     |                                                                                 ^
+  20 |  import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+  21 |  import { useWalletStore } from "../store/walletStore";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/TokenCreatorPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/TokenCreatorPage.tsx:8:7
+  35 |    Divider as MuiDivider,
+  36 |    Chip
+  37 |  } from "@mui/material";
+     |          ^
+  38 |  import ERC20Form from "../components/tokencreator/ERC20Form";
+  39 |  import ERC721Form from "../components/tokencreator/ERC721Form";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/ProjectsPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/ProjectsPage.tsx:2:51
+  17 |  var _s = $RefreshSig$();
+  18 |  import React, { useState } from "react";
+  19 |  import { Box, Button, Typography, Container } from "@mui/material";
+     |                                                      ^
+  20 |  import { Add as AddIcon } from "@mui/icons-material";
+  21 |  import ProjectList from "../components/projects/ProjectList";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "zustand" from "src/store/walletStore.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/store/walletStore.ts:1:23
+  1  |  import { create } from "zustand";
+     |                          ^
+  2  |  import { BrowserProvider, JsonRpcSigner } from "ethers";
+  3  |  export const useWalletStore = create((set) => ({
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "zustand" from "src/store/walletStore.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/store/walletStore.ts:1:23
+  1  |  import { create } from "zustand";
+     |                          ^
+  2  |  import { BrowserProvider, JsonRpcSigner } from "ethers";
+  3  |  export const useWalletStore = create((set) => ({
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "zustand" from "src/store/walletStore.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/store/walletStore.ts:1:23
+  1  |  import { create } from "zustand";
+     |                          ^
+  2  |  import { BrowserProvider, JsonRpcSigner } from "ethers";
+  3  |  export const useWalletStore = create((set) => ({
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/PortfolioPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/PortfolioPage.tsx:9:7
+  44 |    Chip,
+  45 |    Link as MuiLink
+  46 |  } from "@mui/material";
+     |          ^
+  47 |  import DeleteIcon from "@mui/icons-material/Delete";
+  48 |  import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/HomePage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/HomePage.tsx:2:38
+  17 |  var _s = $RefreshSig$();
+  18 |  import React from "react";
+  19 |  import { Typography, Container } from "@mui/material";
+     |                                         ^
+  20 |  import { useThemeContext } from "../components/Layout";
+  21 |  const HomePage = () => {
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/SwapTokensPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/SwapTokensPage.tsx:4:7
+  30 |    Tooltip,
+  31 |    Alert
+  32 |  } from "@mui/material";
+     |          ^
+  33 |  import SwapVertIcon from "@mui/icons-material/SwapVert";
+  34 |  import SettingsIcon from "@mui/icons-material/Settings";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "zustand" from "src/store/walletStore.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/store/walletStore.ts:1:23
+  1  |  import { create } from "zustand";
+     |                          ^
+  2  |  import { BrowserProvider, JsonRpcSigner } from "ethers";
+  3  |  export const useWalletStore = create((set) => ({
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/TaxCalculatorPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/TaxCalculatorPage.tsx:2:101
+  16 |  }
+  17 |  import React from "react";
+  18 |  import { Container, Typography, Paper, Box, Alert, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+     |                                                                                                        ^
+  19 |  import CalculateIcon from "@mui/icons-material/Calculate";
+  20 |  import DescriptionIcon from "@mui/icons-material/Description";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/ProjectDetailPage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/ProjectDetailPage.tsx:8:7
+  31 |    Tabs,
+  32 |    Tab
+  33 |  } from "@mui/material";
+     |          ^
+  34 |  import FileExplorer from "../components/fileexplorer/FileExplorer";
+  35 |  import VersionControlActions from "../components/versioncontrol/VersionControlActions";
+9:46:44 PM [vite] (client) Pre-transform error: Failed to resolve import "@mui/material" from "src/pages/MarketplacePage.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /app/web-app/apps/frontend/src/pages/MarketplacePage.tsx:9:7
+  33 |    Paper,
+  34 |    Alert
+  35 |  } from "@mui/material";
+     |          ^
+  36 |  import SearchIcon from "@mui/icons-material/Search";
+  37 |  import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";

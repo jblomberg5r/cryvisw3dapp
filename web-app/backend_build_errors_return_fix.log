@@ -1,0 +1,27 @@
+
+> @web-app/backend@1.0.0 build
+> tsc
+
+src/index.ts(70,36): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<express.Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+src/index.ts(75,75): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(o: { [s: string]: string; } | ArrayLike<string>): string[]', gave the following error.
+    Argument of type '{ [type: string]: string; } | undefined' is not assignable to parameter of type '{ [s: string]: string; } | ArrayLike<string>'.
+      Type 'undefined' is not assignable to type '{ [s: string]: string; } | ArrayLike<string>'.
+  Overload 2 of 2, '(o: {}): any[]', gave the following error.
+    Argument of type '{ [type: string]: string; } | undefined' is not assignable to parameter of type '{}'.
+      Type 'undefined' is not assignable to type '{}'.
+src/index.ts(94,44): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => express.Response<any, Record<string, any>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Response<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+src/index.ts(114,43): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type '(req: Request, res: Response) => Promise<express.Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
+      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
+npm ERR! Lifecycle script `build` failed with error:
+npm ERR! Error: command failed
+npm ERR!   in workspace: @web-app/backend@1.0.0
+npm ERR!   at location: /app/web-app/apps/backend

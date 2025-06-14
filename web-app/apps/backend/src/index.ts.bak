@@ -1,4 +1,4 @@
-import express, { Express, Request, Response, RequestHandler } from 'express';
+import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import session from 'express-session'; // Added for Passport session
 import configuredPassport, { generateJwtForUser, getFrontendCallbackUrl } from './auth/google.auth.service'; // Renamed import
@@ -26,7 +26,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET || 'yourDefaultSessionSecret', // Should be in .env
     resave: false,
-    saveUninitialized: false, // true might be needed for some OAuth flows if session is not established before redirect
+    saveUninitialized: true, // true might be needed for some OAuth flows if session is not established before redirect
     cookie: { secure: process.env.NODE_ENV === 'production' }, // Use secure cookies in production
   })
 );
@@ -46,95 +46,78 @@ app.get('/hello', (req: Request, res: Response) => {
 });
 
 // Auth routes
-const requestOtpHandler: RequestHandler = async (req, res) => {
+app.post('/auth/email/request-otp', async (req: Request, res: Response) => {
   const requestOtpDto = plainToClass(RequestOtpDto, req.body);
   const errors = await validate(requestOtpDto);
 
   if (errors.length > 0) {
-    res.status(400).json({ errors: errors.map(err => Object.values(err.constraints || {})).flat() });
-    return;
+    return res.status(400).json({ errors: errors.map(err => Object.values(err.constraints)).flat() });
   }
 
   try {
     await authService.requestOtp(requestOtpDto.email);
-    res.status(200).json({ message: 'OTP sent successfully.' });
-    return;
+    return res.status(200).json({ message: 'OTP sent successfully.' });
   } catch (error) {
     console.error('Error requesting OTP:', error);
-    res.status(500).json({ message: 'Error requesting OTP.' });
-    return;
+    return res.status(500).json({ message: 'Error requesting OTP.' });
   }
-};
-app.post('/auth/email/request-otp', requestOtpHandler);
+});
 
-const verifyOtpHandler: RequestHandler = async (req, res) => {
+app.post('/auth/email/verify-otp', async (req: Request, res: Response) => {
   const verifyOtpDto = plainToClass(VerifyOtpDto, req.body);
   const errors = await validate(verifyOtpDto);
 
   if (errors.length > 0) {
-    res.status(400).json({ errors: errors.map(err => Object.values(err.constraints || {})).flat() });
-    return;
+    return res.status(400).json({ errors: errors.map(err => Object.values(err.constraints)).flat() });
   }
 
   try {
     const token = await authService.verifyOtp(verifyOtpDto.email, verifyOtpDto.otp);
     if (token) {
-      res.status(200).json({ token });
-      return;
+      return res.status(200).json({ token });
     } else {
-      res.status(400).json({ message: 'Invalid or expired OTP.' });
-      return;
+      return res.status(400).json({ message: 'Invalid or expired OTP.' });
     }
   } catch (error) {
     console.error('Error verifying OTP:', error);
-    res.status(500).json({ message: 'Error verifying OTP.' });
-    return;
+    return res.status(500).json({ message: 'Error verifying OTP.' });
   }
-};
-app.post('/auth/email/verify-otp', verifyOtpHandler);
+});
 
 // --- Wallet Authentication Routes ---
 import { generateChallenge, verifySignatureAndLogin } from './auth/wallet.auth.service';
 
-const requestChallengeHandler: RequestHandler = (req, res) => {
+app.post('/auth/wallet/request-challenge', (req: Request, res: Response) => {
   const { walletAddress } = req.body;
   if (!walletAddress || typeof walletAddress !== 'string') {
-    res.status(400).json({ message: 'walletAddress is required and must be a string.' });
-    return;
+    return res.status(400).json({ message: 'walletAddress is required and must be a string.' });
   }
   try {
     // Validate wallet address format (basic validation)
     if (!ethers.utils.isAddress(walletAddress)) {
-        res.status(400).json({ message: 'Invalid wallet address format.' });
-        return;
+        return res.status(400).json({ message: 'Invalid wallet address format.' });
     }
     const challenge = generateChallenge(walletAddress);
-    res.status(200).json({ challenge });
-    return;
+    return res.status(200).json({ challenge });
   } catch (error: any) {
     // Catch potential errors from ethers.utils.isAddress if format is extremely malformed,
     // though it usually returns false for typical non-addresses.
     console.error('Error requesting challenge:', error);
-    res.status(500).json({ message: error.message || 'Error generating challenge.' });
-    return;
+    return res.status(500).json({ message: error.message || 'Error generating challenge.' });
   }
-};
-app.post('/auth/wallet/request-challenge', requestChallengeHandler);
+});
 
-const verifySignatureHandler: RequestHandler = async (req, res) => {
+app.post('/auth/wallet/verify-signature', async (req: Request, res: Response) => {
   const { walletAddress, originalChallenge, signature } = req.body;
 
   if (!walletAddress || typeof walletAddress !== 'string') {
-    res.status(400).json({ message: 'walletAddress is required.' });
-    return;
+    return res.status(400).json({ message: 'walletAddress is required.' });
   }
   if (!originalChallenge || typeof originalChallenge !== 'string') {
-    res.status(400).json({ message: 'originalChallenge is required.' });
-    return;
+    return res.status(400).json({ message: 'originalChallenge is required.' });
   }
   if (!signature || typeof signature !== 'string') {
-    res.status(400).json({ message: 'signature is required.' });
-    return;
+    return res.status(400).json({ message: 'signature is required.' });
   }
 
   try {
@@ -144,24 +127,19 @@ const verifySignatureHandler: RequestHandler = async (req, res) => {
 
     const result = await verifySignatureAndLogin(normalizedAddress, originalChallenge, signature);
     if (result) {
-      res.status(200).json({ token: result.token, userId: result.user.id, walletAddress: result.user.walletAddress });
-      return;
+      return res.status(200).json({ token: result.token, userId: result.user.id, walletAddress: result.user.walletAddress });
     } else {
-      res.status(401).json({ message: 'Signature verification failed or challenge invalid/expired.' });
-      return;
+      return res.status(401).json({ message: 'Signature verification failed or challenge invalid/expired.' });
     }
   } catch (error: any) {
     console.error('Error verifying signature:', error);
     // Check if error is due to invalid address format from getAddress
     if (error.code === 'INVALID_ARGUMENT' && error.argument === 'address') {
-        res.status(400).json({ message: 'Invalid wallet address format provided.'});
-        return;
+        return res.status(400).json({ message: 'Invalid wallet address format provided.'});
     }
-    res.status(500).json({ message: error.message || 'Error verifying signature.' });
-    return;
+    return res.status(500).json({ message: error.message || 'Error verifying signature.' });
   }
-};
-app.post('/auth/wallet/verify-signature', verifySignatureHandler);
+});
 
 
 // --- Google OAuth Routes ---

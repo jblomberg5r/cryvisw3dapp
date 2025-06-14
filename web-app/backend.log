@@ -7,51 +7,8 @@
 [33m[nodemon] watching path(s): *.*[39m
 [33m[nodemon] watching extensions: ts,json[39m
 [32m[nodemon] starting `ts-node src/index.ts`[39m
-/app/web-app/node_modules/ts-node/src/index.ts:859
-    return new TSError(diagnosticText, diagnosticCodes, diagnostics);
-           ^
-TSError: ⨯ Unable to compile TypeScript:
-src/index.ts(49,37): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type '(req: Request, res: Response) => Promise<express.Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
-      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
-src/index.ts(54,75): error TS2769: No overload matches this call.
-  Overload 1 of 2, '(o: { [s: string]: string; } | ArrayLike<string>): string[]', gave the following error.
-    Argument of type '{ [type: string]: string; } | undefined' is not assignable to parameter of type '{ [s: string]: string; } | ArrayLike<string>'.
-      Type 'undefined' is not assignable to type '{ [s: string]: string; } | ArrayLike<string>'.
-  Overload 2 of 2, '(o: {}): any[]', gave the following error.
-    Argument of type '{ [type: string]: string; } | undefined' is not assignable to parameter of type '{}'.
-      Type 'undefined' is not assignable to type '{}'.
-src/index.ts(66,36): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type '(req: Request, res: Response) => Promise<express.Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
-      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
-src/index.ts(71,75): error TS2769: No overload matches this call.
-  Overload 1 of 2, '(o: { [s: string]: string; } | ArrayLike<string>): string[]', gave the following error.
-    Argument of type '{ [type: string]: string; } | undefined' is not assignable to parameter of type '{ [s: string]: string; } | ArrayLike<string>'.
-      Type 'undefined' is not assignable to type '{ [s: string]: string; } | ArrayLike<string>'.
-  Overload 2 of 2, '(o: {}): any[]', gave the following error.
-    Argument of type '{ [type: string]: string; } | undefined' is not assignable to parameter of type '{}'.
-      Type 'undefined' is not assignable to type '{}'.
-src/index.ts(90,44): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type '(req: Request, res: Response) => express.Response<any, Record<string, any>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
-      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Response<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
-src/index.ts(110,43): error TS2769: No overload matches this call.
-  The last overload gave the following error.
-    Argument of type '(req: Request, res: Response) => Promise<express.Response<any, Record<string, any>>>' is not assignable to parameter of type 'Application<Record<string, any>>'.
-      Type '(req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>) => Promise<...>' is missing the following properties from type 'Application<Record<string, any>>': init, defaultConfiguration, engine, set, and 63 more.
-
-    at createTSError (/app/web-app/node_modules/ts-node/src/index.ts:859:12)
-    at reportTSError (/app/web-app/node_modules/ts-node/src/index.ts:863:19)
-    at getOutput (/app/web-app/node_modules/ts-node/src/index.ts:1077:36)
-    at Object.compile (/app/web-app/node_modules/ts-node/src/index.ts:1433:41)
-    at Module.m._compile (/app/web-app/node_modules/ts-node/src/index.ts:1617:30)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
-    at Object.require.extensions.<computed> [as .ts] (/app/web-app/node_modules/ts-node/src/index.ts:1621:12)
-    at Module.load (node:internal/modules/cjs/loader:1197:32)
-    at Function.Module._load (node:internal/modules/cjs/loader:1013:12)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12) {
-  diagnosticCodes: [ 2769, 2769, 2769, 2769, 2769, 2769 ]
-}
-[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+Google OAuth credentials are not set. Please configure GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in your .env file.
+[server]: Server is running at http://localhost:3001
+Google OAuth: Ensure GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, and GOOGLE_CALLBACK_URL (e.g., http://localhost:3001/api/auth/google/callback if backend is at /api) are correctly set in your environment variables or .env file.
+Google OAuth Callback URL for setup in Google Cloud Console should be the full public URL for /auth/google/callback, e.g., YOUR_APP_DOMAIN/api/auth/google/callback
+Wallet Auth: Endpoints /auth/wallet/request-challenge and /auth/wallet/verify-signature are active.
