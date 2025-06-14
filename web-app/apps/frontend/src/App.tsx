@@ -10,7 +10,7 @@ const HomePage = () => {
     fetch('/api/hello') // Proxied request, will go to http://localhost:3001/hello
       .then(response => {
         if (!response.ok) {
-          throw new Error(\`HTTP error! status: \${response.status}\`);
+          throw new Error('HTTP error! status: ' + response.status);
         }
         return response.json();
       })

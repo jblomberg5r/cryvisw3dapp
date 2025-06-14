@@ -9,7 +9,7 @@ const ZERION_API_KEY = process.env.ZERION_API_KEY;
 const zerionApiClient = axios.create({
   baseURL: ZERION_API_BASE_URL,
   headers: {
-    'Authorization': \`Basic \${ZERION_API_KEY}\`, // Or 'Bearer' or other scheme as per Zerion docs for API key
+    'Authorization': 'Basic ' + ZERION_API_KEY, // Or 'Bearer' or other scheme as per Zerion docs for API key
     'Content-Type': 'application/json',
   }
 });
@@ -20,10 +20,10 @@ export const getWalletPortfolio = async (address: string) => {
   try {
     // Adjust the endpoint and parameters based on actual Zerion API documentation
     // e.g. /wallets/{address}/portfolio or /portfolio?wallet_address={address}
-    const response = await zerionApiClient.get(\`/wallets/\${address}/portfolio\`, {
+    const response = await zerionApiClient.get('/wallets/' + address + '/portfolio', {
       // params: { currency: 'usd' } // Example parameters
     });
-    console.log(\`Portfolio for \${address}:\`, response.data);
+    console.log('Portfolio for ' + address + ':', response.data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -38,14 +38,14 @@ export const getWalletPortfolio = async (address: string) => {
 // Example function to get list of wallet's fungible positions
 export const getWalletFungibles = async (address: string) => {
   try {
-    const response = await zerionApiClient.get(\`/wallets/\${address}/positions\`, {
+    const response = await zerionApiClient.get('/wallets/' + address + '/positions', {
       params: {
         // 'filter[position_types]': 'fungible', // Example filter if API supports it
         'currency': 'usd',
         'sort': '-value' // Example sorting
       }
     });
-    console.log(\`Fungibles for \${address}:\`, response.data);
+    console.log('Fungibles for ' + address + ':', response.data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

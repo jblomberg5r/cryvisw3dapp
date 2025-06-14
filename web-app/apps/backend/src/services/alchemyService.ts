@@ -26,7 +26,7 @@ export const getLatestBlock = async () => {
 export const getNftsForOwner = async (ownerAddress: string) => {
   try {
     const nfts = await alchemy.nft.getNftsForOwner(ownerAddress);
-    console.log(\`NFTs for \${ownerAddress}:\`, nfts);
+    console.log('NFTs for ' + ownerAddress + ':', nfts);
     return nfts;
   } catch (error) {
     console.error('Error fetching NFTs for owner:', error);

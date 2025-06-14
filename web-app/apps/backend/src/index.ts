@@ -40,7 +40,7 @@ app.get('/portfolio/:address', async (req: Request, res: Response) => {
   try {
     // const portfolio = await getWalletPortfolio(req.params.address);
     // res.json(portfolio);
-    res.json({ message: \`Zerion portfolio endpoint placeholder for \${req.params.address}\` });
+    res.json({ message: 'Zerion portfolio endpoint placeholder for ' + req.params.address });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch portfolio from Zerion' });
   }
@@ -48,5 +48,5 @@ app.get('/portfolio/:address', async (req: Request, res: Response) => {
 */
 
 app.listen(port, () => {
-  console.log(\`[server]: Server is running at http://localhost:\${port}\`);
+  console.log('[server]: Server is running at http://localhost:' + port);
 });
