@@ -48,6 +48,15 @@ The backend (`web-app/apps/backend/`) is where any database interactions are pri
 *   **Alchemy SDK & Zerion API:** Tools for connecting to the blockchain world.
 *   **Docker:** A tool to package the application so it runs the same way everywhere.
 
+## Development Tools
+
+This project leverages several tools to facilitate smart contract and decentralized application (dApp) development:
+
+*   **Remix IDE:** An open-source web and desktop application for Solidity smart contract development. It's useful for quickly writing, deploying, and debugging smart contracts.
+*   **Etherscan:** A block explorer and analytics platform for Ethereum. It allows you to view transactions, smart contract code, and network statistics. It's invaluable for debugging and verifying interactions on the blockchain.
+*   **Hardhat:** A development environment for Ethereum software. It helps manage and automate the recurring tasks inherent in building smart contracts and dApps, like compiling code, running tests, and deploying to various networks.
+*   **ethers.js:** A compact and complete JavaScript library for interacting with the Ethereum Blockchain and its ecosystem. It's used in the frontend and backend to connect to wallets, query blockchain data, and send transactions.
+
 ## Before You Start (Prerequisites)
 
 Make sure you have these tools installed on your computer:
