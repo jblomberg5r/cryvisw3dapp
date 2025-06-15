@@ -17,16 +17,11 @@ web-app/
 │   │   └── package.json
 │   └── backend/      # Node.js (Express + TypeScript) application
 │       ├── src/
-│       │   ├── db/
-│       │   │   ├── schema.ts
-│       │   │   └── migrate.ts
 │       │   ├── services/
 │       │   │   ├── alchemyService.ts
 │       │   │   └── zerionService.ts
 │       │   └── index.ts
-│       ├── drizzle/    # Drizzle ORM migration files
 │       ├── Dockerfile
-│       ├── drizzle.config.ts
 │       └── package.json
 ├── packages/         # (Optional) Shared packages for monorepo
 ├── docker-compose.yml
@@ -51,7 +46,6 @@ web-app/
 *   **Node.js:** JavaScript runtime environment.
 *   **Express.js:** Web application framework for Node.js.
 *   **TypeScript:** For type safety.
-*   **Drizzle ORM:** TypeScript ORM for SQL databases.
 *   **PostgreSQL:** Powerful, open-source object-relational database system.
 
 **Blockchain Integration:**
@@ -116,42 +110,14 @@ DATABASE_URL_DOCKER="postgresql://myuser:mypassword@db:5432/myappdb" # Used by b
 *   Replace placeholder values with your actual API keys and database credentials.
 *   For Zerion API key, if it's used for Basic Authentication, it might need to be in the format \`username:password\` base64 encoded, or just the key itself if it's a Bearer token. Check \`apps/backend/src/services/zerionService.ts\` and Zerion's documentation.
 
-### 4. Database Setup (Drizzle ORM & PostgreSQL)
+### 4. Database Setup (PostgreSQL)
 
-**Option A: Using Docker (Recommended)**
+Ensure your PostgreSQL instance is running and accessible.
 
-If you are using Docker (see Docker section below), the PostgreSQL service will be started by Docker Compose.
+*   **Using Docker:** The PostgreSQL service is defined in \`docker-compose.yml\` and can be started with \`docker-compose up -d db\`. The backend service in Docker is pre-configured to connect to this database.
+*   **Local Instance:** If you are running a local PostgreSQL instance (not in Docker), ensure the \`DATABASE_URL\` in \`apps/backend/.env\` is correctly pointing to your local database.
 
-1.  Start Docker services: \`docker-compose up -d db\` (to only start the database)
-2.  Run migrations against the Dockerized database:
-    \`\`\`bash
-    # From the project root
-    npm run db:generate --workspace=@web-app/backend
-    npm run db:migrate --workspace=@web-app/backend
-    # Or using Docker exec if you prefer:
-    # docker-compose exec backend npm run db:generate
-    # docker-compose exec backend npm run db:migrate
-    \`\`\`
-
-**Option B: Local PostgreSQL Instance**
-
-If you have a local PostgreSQL instance running:
-
-1.  Ensure your \`DATABASE_URL\` in \`apps/backend/.env\` points to your local instance.
-2.  Create the database if it doesn't exist.
-3.  Run migrations:
-    \`\`\`bash
-    # From the project root
-    npm run db:generate --workspace=@web-app/backend
-    npm run db:migrate --workspace=@web-app/backend
-    \`\`\`
-
-**Drizzle Studio (Optional):**
-
-To view and manage your database schema with Drizzle Studio:
-\`\`\`bash
-npm run db:studio --workspace=@web-app/backend
-\`\`\`
+Database schema and table management should be handled using standard SQL tools or a separate migration tool of your choice if needed. Refer to the main \`README.md\` in the repository root for more general guidance on database structure if available.
 
 ## Available Scripts
 
@@ -168,9 +134,6 @@ Turborepo allows running scripts from the root \`package.json\` or within specif
 *   \`npm run dev\`: Starts the backend server with \`nodemon\` for auto-reloading.
 *   \`npm run build\`: Compiles TypeScript to JavaScript.
 *   \`npm run start\`: Starts the compiled backend server (for production).
-*   \`npm run db:generate\`: Generates Drizzle ORM migration files based on schema changes.
-*   \`npm run db:migrate\`: Applies pending migrations to the database.
-*   \`npm run db:studio\`: Starts Drizzle Studio.
 
 **Frontend (\`apps/frontend\`):**
 (Can be run with \`npm run <script> --workspace=@web-app/frontend\` from root)
@@ -193,12 +156,7 @@ The \`docker-compose.yml\` file orchestrates the frontend, backend, and database
     *   Frontend: \`http://localhost:8080\` (served by Nginx)
     *   Backend API: \`http://localhost:3001\`
     *   PostgreSQL: Accessible on host port \`5432\` (if needed for external tools)
-4.  **Running Migrations (if services are already up):**
-    \`\`\`bash
-    docker-compose exec backend npm run db:migrate
-    \`\`\`
-    (Similarly for \`db:generate\`)
-5.  **Stopping Services:**
+4.  **Stopping Services:**
     \`\`\`bash
     docker-compose down
     \`\`\`
