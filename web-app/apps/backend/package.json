@@ -8,9 +8,6 @@
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "db:generate": "drizzle-kit generate:pg",
-    "db:migrate": "tsx src/db/migrate.ts",
-    "db:studio": "drizzle-kit studio",
     "check-types": "tsc --noEmit"
   },
   "keywords": [],
@@ -25,7 +22,6 @@
   },
   "devDependencies": {
     "@types/node": "^24.0.1",
-    "drizzle-kit": "^0.31.1",
     "hardhat": "^2.22.6",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",

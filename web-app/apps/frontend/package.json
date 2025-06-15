@@ -34,7 +34,6 @@
     "@eslint/js": "^9.25.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "@types/react-markdown": "^9.0.1",
     "@types/uuid": "^9.0.8",
     "@vitejs/plugin-react": "^4.4.1",
     "eslint": "^9.25.0",

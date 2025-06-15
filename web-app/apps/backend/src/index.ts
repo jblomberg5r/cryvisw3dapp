@@ -51,7 +51,8 @@ const requestOtpHandler: RequestHandler = async (req, res) => {
   const errors = await validate(requestOtpDto);
 
   if (errors.length > 0) {
-    res.status(400).json({ errors: errors.map(err => Object.values(err.constraints || {})).flat() });
+    const errorMessages = errors.map(err => err.constraints ? Object.values(err.constraints) : []).flat();
+    res.status(400).json({ errors: errorMessages });
     return;
   }
 
@@ -72,7 +73,8 @@ const verifyOtpHandler: RequestHandler = async (req, res) => {
   const errors = await validate(verifyOtpDto);
 
   if (errors.length > 0) {
-    res.status(400).json({ errors: errors.map(err => Object.values(err.constraints || {})).flat() });
+    const errorMessages = errors.map(err => err.constraints ? Object.values(err.constraints) : []).flat();
+    res.status(400).json({ errors: errorMessages });
     return;
   }
 
